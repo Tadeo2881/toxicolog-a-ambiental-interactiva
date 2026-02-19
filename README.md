@@ -7,15 +7,13 @@
   <style>
     :root{
       --bg:#0b1220;
-      --card:#0f1a33;
       --muted:#9fb0d0;
       --text:#e9f0ff;
-      --line:#1f2f59;
+      --line:rgba(255,255,255,.14);
       --ok:#20c997;
 
-      /* Responsive sizing for grid cells */
-      --cell: clamp(26px, 6vw, 38px);   /* cell size adjusts with screen */
-      --gap: clamp(4px, 1.2vw, 7px);    /* gap adjusts with screen */
+      --cell: clamp(28px, 6vw, 42px);
+      --gap: clamp(4px, 1.2vw, 8px);
       --radius: 18px;
       --shadow: 0 10px 30px rgba(0,0,0,.35);
     }
@@ -40,21 +38,16 @@
       flex-wrap:wrap;
     }
     header .title{display:flex;flex-direction:column;gap:6px;min-width:260px;flex:1;}
-    h1{margin:0;font-size:18px;letter-spacing:.2px;line-height:1.2;}
+    h1{margin:0;font-size:18px;line-height:1.2;}
     .sub{margin:0;color:var(--muted);font-size:13px;line-height:1.35;}
 
     .bar{
-      display:flex;
-      gap:10px;
-      align-items:center;
-      flex-wrap:wrap;
-      justify-content:flex-end;
-      flex:1;
-      min-width:260px;
+      display:flex;gap:10px;align-items:center;flex-wrap:wrap;
+      justify-content:flex-end;flex:1;min-width:260px;
     }
 
     button{
-      border:1px solid rgba(255,255,255,.16);
+      border:1px solid var(--line);
       background:rgba(255,255,255,.06);
       color:var(--text);
       padding:12px 14px;
@@ -78,13 +71,9 @@
       grid-template-columns: 1.15fr .85fr;
       gap:14px;
     }
-
-    /* Mobile: single column, big touch areas */
     @media (max-width: 980px){
       .wrap{grid-template-columns:1fr;}
-      header{padding-bottom:10px;}
-      h1{font-size:17px;}
-      button{width:100%;justify-content:center;}
+      button{width:100%;}
       .bar{justify-content:stretch;}
     }
 
@@ -116,11 +105,11 @@
       white-space:nowrap;
     }
 
-    /* Grid area */
     .gridWrap{
       padding:14px;
-      overflow:auto;               /* allows scroll on tiny devices */
+      overflow:auto;
       -webkit-overflow-scrolling: touch;
+      touch-action: none; /* clave para que el dedo arrastre sin hacer scroll */
     }
     .grid{
       display:grid;
@@ -133,9 +122,7 @@
     .cell{
       width:var(--cell);
       height:var(--cell);
-      display:flex;
-      align-items:center;
-      justify-content:center;
+      display:flex;align-items:center;justify-content:center;
       border-radius:12px;
       border:1px solid rgba(255,255,255,.12);
       background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.02));
@@ -144,27 +131,16 @@
       font-weight:800;
       letter-spacing:.4px;
       font-size: clamp(12px, 3.5vw, 16px);
-      touch-action: none; /* helps drag selection */
+      touch-action: none;
     }
     .cell.alt{background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.015));}
     .cell.sel{outline:2px solid rgba(255,255,255,.35); background:rgba(255,255,255,.12);}
     .cell.found{background:rgba(32,201,151,.22); border-color:rgba(32,201,151,.55);}
-
     .cell.wrongFlash{animation:shake .25s ease;}
-    @keyframes shake{
-      0%{transform:translateX(0)}
-      25%{transform:translateX(-2px)}
-      50%{transform:translateX(2px)}
-      75%{transform:translateX(-1px)}
-      100%{transform:translateX(0)}
-    }
+    @keyframes shake{0%{transform:translateX(0)}25%{transform:translateX(-2px)}50%{transform:translateX(2px)}75%{transform:translateX(-1px)}100%{transform:translateX(0)}}
 
     .status{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      align-items:center;
-      justify-content:space-between;
+      display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:space-between;
       padding:12px 14px;
       border-top:1px solid rgba(255,255,255,.10);
       color:var(--muted);
@@ -178,80 +154,33 @@
       font-size:12px;
     }
 
-    /* Right panel */
-    .panel{
-      padding:12px 14px 14px;
-      display:flex;
-      flex-direction:column;
-      gap:12px;
-    }
-    .hint{
-      color:var(--muted);
-      font-size:13px;
-      line-height:1.4;
-    }
-    .qa{
-      display:flex;
-      flex-direction:column;
-      gap:10px;
-    }
+    .panel{padding:12px 14px 14px;display:flex;flex-direction:column;gap:12px;}
+    .hint{color:var(--muted);font-size:13px;line-height:1.4;}
+    .qa{display:flex;flex-direction:column;gap:10px;}
     .row{
-      padding:12px;
-      border-radius:16px;
-      border:1px solid rgba(255,255,255,.10);
+      padding:12px;border-radius:16px;border:1px solid rgba(255,255,255,.10);
       background:rgba(0,0,0,.12);
-      display:grid;
-      grid-template-columns: 1fr;
-      gap:8px;
+      display:grid;grid-template-columns: 1fr;gap:8px;
     }
-    .q{
-      font-size:13px;
-      color:#dbe6ff;
-      line-height:1.35;
-    }
+    .q{font-size:13px;color:#dbe6ff;line-height:1.35;}
     .a{
       font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-      font-size:13px;
-      letter-spacing:.6px;
-      padding:10px 10px;
-      border-radius:14px;
+      font-size:13px;letter-spacing:.6px;
+      padding:10px 10px;border-radius:14px;
       border:1px dashed rgba(255,255,255,.20);
       background:rgba(255,255,255,.04);
-      color:#ffffff;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
-      overflow:hidden;
+      display:flex;align-items:center;justify-content:space-between;gap:10px;
     }
-    .tag{
-      font-size:11px;
-      color:var(--muted);
-      border:1px solid rgba(255,255,255,.14);
-      padding:4px 8px;
-      border-radius:999px;
-      white-space:nowrap;
-      flex:0 0 auto;
-    }
-    .a span:first-child{
-      overflow:hidden;
-      text-overflow:ellipsis;
-      white-space:nowrap;
-      max-width: 100%;
-    }
-    .a.ok{
-      border-style:solid;
-      border-color:rgba(32,201,151,.55);
-      background:rgba(32,201,151,.12);
-    }
+    .tag{font-size:11px;color:var(--muted);border:1px solid rgba(255,255,255,.14);padding:4px 8px;border-radius:999px;white-space:nowrap;}
+    .a.ok{border-style:solid;border-color:rgba(32,201,151,.55);background:rgba(32,201,151,.12);}
 
-    .footerNote{
-      max-width:1200px;
-      margin:0 auto;
-      padding:0 14px 18px;
-      color:var(--muted);
-      font-size:12px;
-      line-height:1.4;
+    .answersBox{
+      padding:12px;border-radius:16px;border:1px solid rgba(255,255,255,.10);
+      background:rgba(0,0,0,.12);
+    }
+    .answersTitle{margin:0 0 8px 0;font-size:13px;color:#dbe6ff;}
+    .answersList{
+      margin:0;padding-left:18px;color:var(--muted);font-size:13px;line-height:1.5;
     }
   </style>
 </head>
@@ -260,7 +189,7 @@
   <header>
     <div class="title">
       <h1>Sopa de letras – Introducción a la Toxicología Ambiental</h1>
-      <p class="sub">Selecciona letras en línea recta (horizontal, vertical o diagonal). Al acertar, se marca en verde y se completa la respuesta.</p>
+      <p class="sub">Arrastra con mouse o dedo. Al acertar, se marca en verde y se completa la respuesta.</p>
     </div>
     <div class="bar">
       <button id="btnNew">Nuevo juego (cambia posiciones)</button>
@@ -281,72 +210,54 @@
 
       <div class="status">
         <div>Encontradas: <b id="foundCount">0</b>/<b id="totalCount">0</b></div>
-        <div>Tip: arrastra o toca letras. <span class="kbd">Esc</span> limpia.</div>
+        <div>Tip: <span class="kbd">Esc</span> limpia.</div>
       </div>
     </section>
 
     <aside class="card">
       <h2>
         Preguntas y respuestas
-        <span class="chip" id="chipHelp">30 reactivos</span>
+        <span class="chip" id="chipHelp">10 reactivos</span>
       </h2>
       <div class="panel">
         <div class="hint">
-          ✅ Las <b>respuestas</b> se completan cuando encuentras la palabra.<br>
-          🔁 “Nuevo juego” reubica las palabras.<br>
-          📱 Diseñado para verse bien en celular.
+          ✅ Solo 10 reactivos.<br>
+          ✅ La selección funciona en celular (arrastrar con el dedo).<br>
+          📌 Abajo tienes la <b>lista de respuestas</b>.
         </div>
+
         <div class="qa" id="qa"></div>
+
+        <div class="answersBox">
+          <p class="answersTitle"><b>Lista de respuestas</b></p>
+          <ol class="answersList" id="answersList"></ol>
+        </div>
       </div>
     </aside>
   </div>
 
-  <div class="footerNote">
-    Si alguna palabra no cabe, aumenta <b>GRID_SIZE</b> (por ejemplo 20) o acorta respuestas. Recomendación: respuestas sin acentos y sin espacios.
-  </div>
-
 <script>
 /* =========================
-   PREGUNTAS Y RESPUESTAS (unidad)
+   10 PREGUNTAS (Unidad: Introducción)
+   Respuestas sin acentos y sin espacios (usa guion bajo si quieres, aquí no lo usamos en la sopa)
    ========================= */
 const QA = [
-  { q: "Sustancia capaz de producir un efecto nocivo en un organismo.", answer: "AGENTE_TOXICO" },
+  { q: "Sustancia capaz de producir daño en un organismo.", answer: "AGENTE_TOXICO" },
   { q: "Capacidad inherente de una sustancia para causar daño.", answer: "TOXICIDAD" },
   { q: "Cantidad de sustancia que ingresa al organismo.", answer: "DOSIS" },
-  { q: "Contacto de un organismo con un agente toxico.", answer: "EXPOSICION" },
-  { q: "Tipo de exposicion que ocurre en corto tiempo.", answer: "AGUDA" },
-  { q: "Tipo de exposicion que ocurre durante largo tiempo.", answer: "CRONICA" },
-  { q: "Exposicion que ocurre repetidamente en intervalos.", answer: "INTERMITENTE" },
-  { q: "Origen natural o artificial de sustancias contaminantes.", answer: "FUENTES_DE_CONTAMINACION" },
-  { q: "Contaminacion proveniente de procesos industriales.", answer: "INDUSTRIAL" },
-  { q: "Contaminacion generada por actividades agricolas.", answer: "AGRICOLA" },
-  { q: "Contaminacion producida por residuos domesticos.", answer: "DOMESTICA" },
-  { q: "Contaminacion causada por transporte vehicular.", answer: "VEHICULAR" },
-  { q: "Clasificacion de toxicos por energia fisica.", answer: "FISICOS" },
-  { q: "Clasificacion de toxicos por sustancias quimicas.", answer: "QUIMICOS" },
-  { q: "Clasificacion de toxicos por organismos vivos.", answer: "BIOLOGICOS" },
-  { q: "Radiacion y ruido son ejemplos de toxicos.", answer: "FISICOS" },
-  { q: "Metales pesados y pesticidas son ejemplos de toxicos.", answer: "QUIMICOS" },
-  { q: "Virus y bacterias son ejemplos de toxicos.", answer: "BIOLOGICOS" },
-  { q: "Proceso mediante el cual el toxico entra al organismo.", answer: "INGRESO" },
-  { q: "Cantidad minima que produce efecto observable.", answer: "UMBRAL" },
-  { q: "Relacion entre dosis administrada y efecto biologico.", answer: "DOSIS_RESPUESTA" },
-  { q: "Contacto directo con la piel.", answer: "DERMICA" },
-  { q: "Ingreso por el sistema respiratorio.", answer: "INHALACION" },
-  { q: "Ingreso por el sistema digestivo.", answer: "INGESTION" },
-  { q: "Sustancia presente en aire, agua o suelo que altera el ambiente.", answer: "CONTAMINANTE" },
-  { q: "Efecto danino provocado por sustancia toxica.", answer: "DANO" },
-  { q: "Nivel de sustancia presente en un medio.", answer: "CONCENTRACION" },
-  { q: "Tiempo durante el cual ocurre la exposicion.", answer: "DURACION" },
-  { q: "Frecuencia con la que ocurre la exposicion.", answer: "FRECUENCIA" },
-  { q: "Evaluacion integral del peligro y la exposicion.", answer: "RIESGO" }
+  { q: "Contacto de un organismo con un agente tóxico.", answer: "EXPOSICION" },
+  { q: "Tipo de exposición de corta duración.", answer: "AGUDA" },
+  { q: "Tipo de exposición de larga duración.", answer: "CRONICA" },
+  { q: "Origen natural o artificial de sustancias contaminantes.", answer: "FUENTES" },
+  { q: "Clasificación de tóxicos por energía física (ej. radiación, ruido).", answer: "FISICOS" },
+  { q: "Clasificación de tóxicos por sustancias (ej. metales, plaguicidas).", answer: "QUIMICOS" },
+  { q: "Clasificación de tóxicos por organismos vivos (ej. virus, bacterias).", answer: "BIOLOGICOS" },
 ];
 
 /* =========================
-   CONFIGURACIÓN
+   CONFIG
    ========================= */
-let GRID_SIZE = 18; // Si una palabra no cabe, sube a 20
-
+let GRID_SIZE = 16; // con 10 palabras puede ser 16; si quieres más espacio sube a 18
 const ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 const DIRECTIONS = [
   {dr:0, dc:1},{dr:1, dc:0},{dr:0, dc:-1},{dr:-1, dc:0},
@@ -359,11 +270,11 @@ const norm = (s) => s
   .replace(/[^A-Z_]/g,"")
   .replaceAll("_",""); // en la sopa no metemos guion bajo
 
-// Estado
 let grid = [];
-let placed = [];
+let placed = []; // {q, answer, w, cells:[idx], found:false}
 let selecting = false;
 let selected = [];
+let activePointerId = null;
 
 const $grid = document.getElementById("grid");
 const $qa = document.getElementById("qa");
@@ -371,6 +282,7 @@ const $foundCount = document.getElementById("foundCount");
 const $totalCount = document.getElementById("totalCount");
 const $chipSize = document.getElementById("chipSize");
 const $chipHelp = document.getElementById("chipHelp");
+const $answersList = document.getElementById("answersList");
 
 document.getElementById("btnNew").addEventListener("click", newGame);
 document.getElementById("btnClear").addEventListener("click", clearSelection);
@@ -394,7 +306,7 @@ function canPlace(word, r, c, dir){
 }
 
 function placeWord(word){
-  for(let t=0;t<1400;t++){
+  for(let t=0;t<1500;t++){
     const dir = DIRECTIONS[randInt(DIRECTIONS.length)];
     const r = randInt(GRID_SIZE);
     const c = randInt(GRID_SIZE);
@@ -428,55 +340,64 @@ function renderGrid(){
     d.className = "cell" + (((Math.floor(idx/GRID_SIZE)+idx)%2===0) ? " alt" : "");
     d.textContent = ch;
     d.dataset.idx = idx;
-
-    // Touch + mouse selection
-    d.addEventListener("pointerdown",(e)=>{
-      e.preventDefault();
-      selecting = true;
-      clearSelection();
-      addToSelection(idx);
-      d.setPointerCapture?.(e.pointerId);
-    });
-
-    d.addEventListener("pointerenter",()=>{
-      if(!selecting) return;
-      if(selected.length===1){
-        addToSelection(idx);
-      } else if(selected.length>=2){
-        const ok = isCollinearSelection(selected[0], selected[1], idx);
-        if(ok) addToSelection(idx);
-      }
-    });
-
-    d.addEventListener("pointerup",(e)=>{
-      if(!selecting) return;
-      selecting = false;
-      checkSelection();
-      d.releasePointerCapture?.(e.pointerId);
-    });
-
-    // Tap to extend selection (optional)
-    d.addEventListener("click",()=>{
-      if(selecting) return;
-      if(selected.length===0){
-        addToSelection(idx);
-      } else if(selected.length===1){
-        addToSelection(idx);
-      } else {
-        const ok = isCollinearSelection(selected[0], selected[1], idx);
-        if(ok) addToSelection(idx);
-      }
-    });
-
     $grid.appendChild(d);
   });
 
-  window.addEventListener("pointerup",()=>{
-    if(selecting){
-      selecting=false;
-      checkSelection();
-    }
-  }, { once:true });
+  // === SELECCIÓN ROBUSTA (mouse + touch) ===
+  $grid.addEventListener("pointerdown", onPointerDown);
+  window.addEventListener("pointermove", onPointerMove);
+  window.addEventListener("pointerup", onPointerUp);
+  window.addEventListener("pointercancel", onPointerUp);
+}
+
+function onPointerDown(e){
+  const cell = getCellFromPoint(e.clientX, e.clientY);
+  if(!cell) return;
+  e.preventDefault();
+  selecting = true;
+  activePointerId = e.pointerId;
+  clearSelection();
+  addToSelection(Number(cell.dataset.idx));
+}
+
+function onPointerMove(e){
+  if(!selecting) return;
+  if(activePointerId !== null && e.pointerId !== activePointerId) return;
+
+  const cell = getCellFromPoint(e.clientX, e.clientY);
+  if(!cell) return;
+
+  const idx = Number(cell.dataset.idx);
+
+  // Permitir selección en línea recta:
+  if(selected.length === 0){
+    addToSelection(idx);
+    return;
+  }
+  if(selected.length === 1){
+    addToSelection(idx);
+    return;
+  }
+  // desde 2, debe mantener la dirección
+  if(isCollinearSelection(selected[0], selected[1], idx)){
+    addToSelection(idx);
+  }
+}
+
+function onPointerUp(e){
+  if(!selecting) return;
+  if(activePointerId !== null && e.pointerId !== activePointerId) return;
+
+  selecting = false;
+  activePointerId = null;
+  checkSelection();
+}
+
+function getCellFromPoint(x,y){
+  const el = document.elementFromPoint(x,y);
+  if(!el) return null;
+  if(el.classList && el.classList.contains("cell")) return el;
+  return null;
 }
 
 function renderQA(){
@@ -504,6 +425,15 @@ function renderQA(){
   });
 
   updateCounts();
+}
+
+function renderAnswersList(){
+  $answersList.innerHTML = "";
+  placed.forEach(p=>{
+    const li = document.createElement("li");
+    li.textContent = norm(p.answer);
+    $answersList.appendChild(li);
+  });
 }
 
 function mask(ans){
@@ -535,9 +465,7 @@ function addToSelection(idx){
   if(el) el.classList.add("sel");
 }
 
-function idxToRC(idx){
-  return { r: Math.floor(idx/GRID_SIZE), c: idx % GRID_SIZE };
-}
+function idxToRC(idx){ return { r: Math.floor(idx/GRID_SIZE), c: idx % GRID_SIZE }; }
 
 function isCollinearSelection(a,b,c){
   const A = idxToRC(a), B = idxToRC(b), C = idxToRC(c);
@@ -588,26 +516,17 @@ function checkSelection(){
   });
 }
 
-function autoFitGridSize(){
-  // If longest word doesn't fit, increase GRID_SIZE a bit automatically
-  const maxLen = Math.max(...QA.map(x=>norm(x.answer).length));
-  if(maxLen > GRID_SIZE) GRID_SIZE = Math.min(24, Math.max(GRID_SIZE, maxLen + 2));
-}
-
 function newGame(){
-  autoFitGridSize();
+  // Ajuste automático si la palabra más larga no cabe
+  const maxLen = Math.max(...QA.map(x=>norm(x.answer).length));
+  if(maxLen + 2 > GRID_SIZE) GRID_SIZE = Math.min(22, maxLen + 2);
 
   grid = makeEmptyGrid(GRID_SIZE);
   placed = [];
   clearSelection();
 
-  const items = QA.map(x=>({ q:x.q, answer:x.answer }));
-  for(let i=items.length-1;i>0;i--){
-    const j = randInt(i+1);
-    [items[i],items[j]] = [items[j],items[i]];
-  }
-
-  const sorted = items
+  // Colocar primero palabras largas
+  const sorted = QA
     .map(x=>({...x, w:norm(x.answer)}))
     .sort((a,b)=>b.w.length-a.w.length);
 
@@ -615,14 +534,13 @@ function newGame(){
     const idxs = placeWord(it.w);
     if(idxs){
       placed.push({ q: it.q, answer: it.answer, w: it.w, cells: idxs, found:false });
-    } else {
-      console.warn("No cupo:", it.w, "-> Sube GRID_SIZE");
     }
   }
 
   fillRandom();
   renderGrid();
   renderQA();
+  renderAnswersList();
   $chipSize.textContent = `${GRID_SIZE}×${GRID_SIZE}`;
 }
 
